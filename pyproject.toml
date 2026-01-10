@@ -1,0 +1,66 @@
+[project]
+name = "s"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.0.1",
+    "djangorestframework>=3.16.1",
+    "python-decouple>=3.8",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.11",
+]
+
+##########
+
+[tool.ruff]
+target-version = "py314"
+
+line-length = 88
+
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "migrations",
+    ".pytest_cache",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+
+ignore = [
+    "E501",  # line too long
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+]
+
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # unused imports u __init__.py
+"settings.py" = ["E501"]  # long lines u settings
+"*/migrations/*" = ["E501", "F401"]  # migrations ignore
+
+[tool.ruff.format]
+quote-style = "single"
+
+indent-style = "space"
+
+skip-magic-trailing-comma = false

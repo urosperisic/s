@@ -1,0 +1,167 @@
+============================
+========== nvidia ==========
+============================
+
+sudo dnf update -y
+sudo reboot
+
+mokutil --sb-state
+
+sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+sudo dnf install -y akmod-nvidia
+sudo akmods --force
+sudo grubby --update-kernel=ALL --args="nvidia-drm.modeset=1"
+sudo reboot
+
+lsmod | grep nvidia
+glxinfo | grep "OpenGL renderer"
+sudo cat /sys/module/nvidia_drm/parameters/modeset
+
+========================
+========== uv ==========
+========================
+
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+=========================
+========== git ==========
+=========================
+
+git config --global user.name "name"
+git config --global user.email "email"
+
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub
+chmod 644 ~/.ssh/known_hosts
+ssh -T git@github.com
+git clone git@github.com:urosperisic/s.git
+
+=========================
+========== nvm ==========
+=========================
+
+url -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
+nvm --version
+nvm install --lts
+nvm use --lts
+node --version
+npm --version
+
+==============================
+========== vscodium ==========
+==============================
+
+sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=VSCodium\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee /etc/yum.repos.d/vscodium.repo
+
+sudo dnf install codium
+
+===========================
+========== steam ==========
+===========================
+
+# 1. Find saves
+cd ~/.steam/debian-installation/userdata/
+ls -la
+
+# 2. Go to your profile (replace [your_Steam_ID] with the folder number)
+cd [your_Steam_ID]/
+ls -la
+
+# 3. Check the saves for the specific game
+cd [ID_game]/
+ls -la
+du -sh remote/
+
+# 4. Delete a game’s save files
+rm -rf remote/
+# OR delete all save files at once
+cd ~/.steam/debian-installation/userdata/[your_ID]/
+rm -rf */remote/
+
+# 5. Check whether it has been deleted
+ls ~/.steam/debian-installation/userdata/[your_ID]/[ID_game]/
+
+==========================
+========== rust ==========
+==========================
+
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+
+rustup component add rust-analyzer
+rust-analyzer --version
+rustc --version
+
+{
+    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.useTabs": true,
+    "files.autoSave": "onFocusChange",
+    "workbench.colorTheme": "Winter is Coming (Dark Black - No Italics)",
+    "breadcrumbs.enabled": false,
+    "editor.stickyScroll.enabled": false,
+    "editor.tabSize": 2,
+    "terminal.integrated.suggest.providers": {
+        "lsp": false,
+        "vscode.terminal-suggest": false
+    },
+    "terminal.integrated.env.osx": {
+        "PATH": "${env:HOME}/.cargo/bin:${env:PATH}"
+    }
+}
+
+rustc main.rs
+rustfmt main.rs
+file main
+./main
+
+cargo run
+cargo fmt
+cargo build
+cargo b
+cargo clean
+cargo check
+./target/debug/hello_world
+cargo run --release --quiet
+cargo b --release
+./target/release/hello_world
+
+=============================
+========== omarchy ==========
+=============================
+
+# env = GDK_SCALE,1.5
+
+# LAPTOP primary (position 0,0)
+monitor=eDP-1,1920x1080@120,0x0,1.25
+
+# EXTERNAL - position 1536x0 (logical width - laptop)
+monitor=HDMI-A-1,3840x2160@60,1536x0,1.5
+
+# Fallback
+monitor=,preferred,auto,auto
+
+# Workspaces
+workspace=1,monitor:eDP-1,default:true
+workspace=2,monitor:HDMI-A-1,default:true
+
+=========================
+========== drf ==========
+=========================
+
+uv init
+uv python pin 3.14
+source .venv/bin/activate
+uv add django djangorestframework python-decouple
+uv add --dev ruff
+uv pip list
+uv sync
+
+uv run django-admin startproject config .
+uv run python manage.py startapp accounts
+
+ruff check . --fix && ruff format .
