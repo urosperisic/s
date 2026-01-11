@@ -165,3 +165,11 @@ uv run django-admin startproject config .
 uv run python manage.py startapp accounts
 
 ruff check . --fix && ruff format .
+
+uv add whitenoise
+
+uv run python manage.py startapp frontend
+
+npm create vite@latest client -- --template react
+
+npm install react-router-dom
