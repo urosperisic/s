@@ -173,3 +173,10 @@ uv run python manage.py startapp frontend
 npm create vite@latest client -- --template react
 
 npm install react-router-dom
+
+uv add djangorestframework-simplejwt
+
+'BLACKLIST_AFTER_ROTATION': False,  # set to True later with blacklist app
+'AUTH_COOKIE_SECURE': False,  # set to True in production (HTTPS)
+CSRF_COOKIE_SECURE = False  # set to True in production
+CSRF_COOKIE_HTTPONLY = False  # must be False so JS can read it
