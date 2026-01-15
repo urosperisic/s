@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import '../styles/Users.css'
 
 function Users() {
   const [users, setUsers] = useState([])
@@ -12,7 +11,6 @@ function Users() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  // Redirect if not admin
   useEffect(() => {
     if (user && user.role !== 'admin') {
       navigate('/')
@@ -58,7 +56,6 @@ function Users() {
         throw new Error(data.detail || 'Failed to delete user')
       }
 
-      // Remove user from list
       setUsers(users.filter((u) => u.id !== userId))
     } catch (err) {
       alert(err.message)
@@ -74,73 +71,55 @@ function Users() {
   }
 
   if (loading) {
-    return (
-      <div className="content-wrapper">
-        <main>
-          <p>Loading users...</p>
-        </main>
-      </div>
-    )
+    return <main><p>Loading users...</p></main>
   }
 
   if (error) {
     return (
-      <div className="content-wrapper">
-        <main>
-          <div className="error-message" role="alert">
-            {error}
-          </div>
-        </main>
-      </div>
+      <main>
+        <div className="error" role="alert">
+          {error}
+        </div>
+      </main>
     )
   }
 
   return (
-    <div className="content-wrapper">
-      <main>
-        <h1 className="page-title">User Management</h1>
-        <p className="users-count">Total users: {users.length}</p>
+    <main>
+      <h1>User Management</h1>
+      <p>Total users: {users.length}</p>
 
-        <div className="table-container">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Joined</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.username}</td>
-                  <td>{u.email}</td>
-                  <td>
-                    <span className={`role-badge ${u.role}`}>{u.role}</span>
-                  </td>
-                  <td>{formatDate(u.date_joined)}</td>
-                  <td>
-                    {u.id !== user?.id ? (
-                      <button
-                        onClick={() => handleDelete(u.id, u.username)}
-                        className="btn-delete"
-                        aria-label={`Delete user ${u.username}`}
-                      >
-                        Delete
-                      </button>
-                    ) : (
-                      <span className="text-muted">Current user</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </main>
-    </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th className="hide-mobile">Role</th>
+            <th className="hide-mobile">Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((u) => (
+            <tr key={u.id}>
+              <td>{u.username}</td>
+              <td>{u.email}</td>
+              <td className="hide-mobile">{u.role}</td>
+              <td className="hide-mobile">{formatDate(u.date_joined)}</td>
+              <td>
+                {u.id !== user?.id ? (
+                  <button onClick={() => handleDelete(u.id, u.username)}>
+                    Delete
+                  </button>
+                ) : (
+                  <span>current</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
   )
 }
 

@@ -1,9 +1,9 @@
-// frontend/client/src/pages/MySnippets.jsx
+// frontend/client/src/pages/Explore.jsx
 
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-function MySnippets() {
+function Explore() {
   const [snippets, setSnippets] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -14,7 +14,7 @@ function MySnippets() {
 
   const fetchSnippets = async () => {
     try {
-      const response = await fetch('/api/snippets/my/', {
+      const response = await fetch('/api/snippets/public/', {
         credentials: 'include',
       })
 
@@ -28,27 +28,6 @@ function MySnippets() {
       setError(err.message)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleDelete = async (snippetId, title) => {
-    if (!window.confirm(`Are you sure you want to delete "${title}"?`)) {
-      return
-    }
-
-    try {
-      const response = await fetch(`/api/snippets/${snippetId}/delete/`, {
-        method: 'DELETE',
-        credentials: 'include',
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to delete snippet')
-      }
-
-      setSnippets(snippets.filter((s) => s.id !== snippetId))
-    } catch (err) {
-      alert(err.message)
     }
   }
 
@@ -76,14 +55,11 @@ function MySnippets() {
 
   return (
     <main>
-      <h1>My Snippets</h1>
-      <Link to="/new" className="btn">+ New Snippet</Link>
+      <h1>Explore Snippets</h1>
+      <p className="description">Discover code snippets shared by the community</p>
 
       {snippets.length === 0 ? (
-        <div>
-          <p>You haven't created any snippets yet.</p>
-          <Link to="/new" className="btn">Create your first snippet</Link>
-        </div>
+        <p>No public snippets available yet.</p>
       ) : (
         <div>
           {snippets.map((snippet) => (
@@ -95,11 +71,9 @@ function MySnippets() {
                 <p className="description">{snippet.description}</p>
               )}
 
-              <p>{formatDate(snippet.created_at)} • {snippet.visibility}</p>
+              <p>{snippet.author_username} • {formatDate(snippet.created_at)}</p>
 
-              <Link to={`/snippet/${snippet.id}`} className="btn">View</Link>
-              <Link to={`/snippet/${snippet.id}/edit`} className="btn">Edit</Link>
-              <button onClick={() => handleDelete(snippet.id, snippet.title)} className="btn">Delete</button>
+              <Link to={`/snippet/${snippet.id}`} className="btn">View Snippet</Link>
             </div>
           ))}
         </div>
@@ -108,4 +82,4 @@ function MySnippets() {
   )
 }
 
-export default MySnippets
+export default Explore

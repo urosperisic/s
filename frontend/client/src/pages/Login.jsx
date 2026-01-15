@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import '../styles/Form.css'
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -21,7 +20,7 @@ function Login() {
 
     try {
       await login(username, password)
-      navigate('/')
+      navigate('/my-snippets')
     } catch (err) {
       setError('Invalid username or password')
     } finally {
@@ -30,73 +29,53 @@ function Login() {
   }
 
   return (
-    <div className="content-wrapper">
-      <main>
-        <div className="form-container">
-          <h1 className="form-title">Login</h1>
+    <main>
+      <h1>Login</h1>
 
-          {error && (
-            <div className="error-message" role="alert">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="username" className="visually-hidden">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                autoComplete="username"
-                className="form-input"
-                aria-required="true"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password" className="visually-hidden">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
-                className="form-input"
-                aria-required="true"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="form-button"
-              aria-busy={loading}
-            >
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-          </form>
-
-          <p className="form-footer">
-            Don't have an account?{' '}
-            <Link to="/register" className="form-link">
-              Register here
-            </Link>
-          </p>
+      {error && (
+        <div className="error" role="alert">
+          {error}
         </div>
-      </main>
-    </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="username" className="visually-hidden">
+          Username
+        </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          autoComplete="username"
+        />
+
+        <label htmlFor="password" className="visually-hidden">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="current-password"
+        />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
+
+      <p>
+        Don't have an account? <Link to="/register">Register here</Link>
+      </p>
+    </main>
   )
 }
 

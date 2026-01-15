@@ -1,6 +1,6 @@
 /* frontend/client/src/index.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 /* ============= Base Styles ============= */
 
@@ -17,34 +17,226 @@ html {
 }
 
 body {
-  background-color: #fafafa;
-  font-family: "Inter", sans-serif;
-  color: #333;
+  background-color: #fff;
+  font-family: 'Inter', sans-serif;
+  color: #000;
   line-height: 1.6;
-  font-size: clamp(1.3rem, 2.3vw, 1.5rem);
+  font-size: 1.4rem;
+  padding: 0.5rem;
 }
 
-/* ============= Utility Classes ============= */
+/* ============= Typography ============= */
 
-.bolded {
+h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.bold {
   font-weight: 700;
 }
 
-.text-red {
-  color: #a30000;
+.description {
+  color: #666;
+  white-space: pre-line;
+  line-height: 1rem;
 }
 
-.highlight {
+/* ============= Buttons ============= */
+
+button {
+  padding: 0.4rem 1rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-family: inherit;
+  color: #000;
+  background-color: #fff;
+  border: 0.1rem solid #000;
+  cursor: pointer;
+  text-decoration: none;
   display: inline-block;
-  padding: 0.2rem 0.4rem;
-  color: #d14;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-  border-radius: 0.3rem;
-  font-size: 0.9em;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
 }
 
-/* Accessibility - visually hidden but screen reader accessible */
+.btn {
+  padding: 0.4rem 1rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-family: inherit;
+  color: #000;
+  background-color: #fff;
+  border: 0.1rem solid #000;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+nav ul button {
+  border: none;
+  padding: 0;
+  background: none;
+  margin: 0;
+  font-size: 1.4rem;
+  padding-bottom: 0.2rem;
+}
+
+nav ul button:hover {
+  border-bottom: 0.1rem solid #000;
+}
+
+/* ============= Forms ============= */
+
+input,
+textarea,
+select {
+  display: block;
+  max-width: 700px;
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  font-family: inherit;
+  color: #000;
+  background-color: #fff;
+  border: 0.1rem solid #000;
+  margin-bottom: 1rem;
+}
+
+textarea {
+  resize: vertical;
+  font-family: 'Courier New', monospace;
+}
+
+label {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+input[type="checkbox"] {
+  display: block;
+  width: auto;
+  margin: 0;
+}
+
+/* ============= Layout ============= */
+
+#root {
+  min-height: 100vh;
+}
+
+main {
+  max-width: 700px;
+  padding: 8rem 2rem
+}
+
+/* ============= Navbar ============= */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 1rem 2rem;
+  z-index: 100;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  font-size: 1.4rem;
+  padding-bottom: 0.2rem;
+}
+
+nav a:hover {
+  border-bottom: 0.1rem solid #000;
+}
+
+/* ============= Code Block ============= */
+
+pre {
+  background-color: #fff;
+  padding: 3rem 1.6rem 1.6rem 1.6rem;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+  color: #000;
+}
+
+.token.string {
+  font-weight: 600;
+}
+
+/* ============= Table ============= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 1rem;
+  border: 0.1rem solid #000;
+}
+
+th {
+  font-weight: 700;
+}
+
+/* ============= Spacing ============= */
+
+form {
+  margin-bottom: 2rem;
+}
+
+form > div {
+  margin-bottom: 2rem;
+}
+
+/* Snippet cards */
+
+main > div > div {
+  max-width: 700px;
+  padding: 0.5rem 0.5rem 2rem 2rem;
+  margin-bottom: 2rem;
+}
+
+/* ============= Utility ============= */
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -57,24 +249,33 @@ body {
   border: 0;
 }
 
-/* ============= Layout ============= */
-
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.error {
+  color: #000;
+  border: 0.1rem solid #000;
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
 
-.content-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+/* ============= Responsive ============= */
 
-main {
-  flex: 1;
-  padding: clamp(2rem, 5vw, 6rem) 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+@media (max-width: 768px) {
+  main {
+    padding: 6rem 0.5rem
+  }
+
+  nav {    padding: 1rem 0.5rem;
+
+  }
+
+  nav ul {
+    gap: 1rem;
+  }
+
+  main > div > div {
+    padding: 1rem;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
 }

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import '../styles/Form.css'
 
 function Register() {
   const [username, setUsername] = useState('')
@@ -31,92 +30,68 @@ function Register() {
   }
 
   return (
-    <div className="content-wrapper">
-      <main>
-        <div className="form-container">
-          <h1 className="form-title">Register</h1>
+    <main>
+      <h1>Register</h1>
 
-          {error && (
-            <div className="error-message" role="alert">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label htmlFor="username" className="visually-hidden">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                autoComplete="username"
-                className="form-input"
-                aria-required="true"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email" className="visually-hidden">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-                className="form-input"
-                aria-required="true"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password" className="visually-hidden">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-                className="form-input"
-                aria-required="true"
-                minLength="8"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="form-button"
-              aria-busy={loading}
-            >
-              {loading ? 'Registering...' : 'Register'}
-            </button>
-          </form>
-
-          <p className="form-footer">
-            Already have an account?{' '}
-            <Link to="/login" className="form-link">
-              Login here
-            </Link>
-          </p>
+      {error && (
+        <div className="error" role="alert">
+          {error}
         </div>
-      </main>
-    </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="username" className="visually-hidden">
+          Username
+        </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          autoComplete="username"
+        />
+
+        <label htmlFor="email" className="visually-hidden">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          autoComplete="email"
+        />
+
+        <label htmlFor="password" className="visually-hidden">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="new-password"
+          minLength="8"
+        />
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Registering...' : 'Register'}
+        </button>
+      </form>
+
+      <p>
+        Already have an account? <Link to="/login">Login here</Link>
+      </p>
+    </main>
   )
 }
 

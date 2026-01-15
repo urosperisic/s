@@ -180,3 +180,7 @@ uv add djangorestframework-simplejwt
 'AUTH_COOKIE_SECURE': False,  # set to True in production (HTTPS)
 CSRF_COOKIE_SECURE = False  # set to True in production
 CSRF_COOKIE_HTTPONLY = False  # must be False so JS can read it
+
+uv run python manage.py startapp snippets
+
+npm install prismjs
